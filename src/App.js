@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import {firebase} from './services/firebase';
 
 //This is importing the entire react bootstrap library
 import {Container, Row, Col} from 'react-bootstrap';
@@ -22,7 +23,7 @@ function App() {
               <Link to="/"><button className="btn btn-primary">Flashcards</button></Link>
             </Col>
             <Col md={6}>
-              <Link to="addcard"><button className="btn btn-secondary">Add Card</button></Link>
+              <Link to="/addcard"><button className="btn btn-secondary">Add Card</button></Link>
             </Col>
           </Row>
         </Container>

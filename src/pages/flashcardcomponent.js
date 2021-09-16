@@ -59,8 +59,9 @@ export default class FlashCard extends React.Component {
             <Container className="center">
                 <Row>
                     <Col>
-                    <h1>{this.state.isLoaded? this.state.flashCards[1].Term: ''}</h1>
-                    <h2>{this.state.isLoaded? this.state.flashCards[1].Definition: ''}</h2>
+                    <h3>Category: {this.state.isLoaded? this.state.flashCards[1].Category: ''}</h3>
+                    <h1>Term: {this.state.isLoaded? this.state.flashCards[1].Term: ''}</h1>
+                    {/* <h2>{this.state.isLoaded? this.state.flashCards[1].Definition: ''}</h2> */}
                     </Col>
                 </Row>
             </Container>
