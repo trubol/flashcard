@@ -10,16 +10,17 @@ const firebaseConfig = {
     messagingSenderId: "961561909209",
     appId: "1:961561909209:web:feca6941e805e50c712bc8"
   };
-  
-const firebase = initializeApp(firebaseConfig);
-const db = getFirestore();
+
+  const firebase=initializeApp(firebaseConfig);
+  const db=getFirestore();
 
 async function AddFlashCard(card) {
     try {
         const docRef = await addDoc(collection(db, "flashcards"), {
           Category: card.Category,
-          Definition: card.Definition,
-          Term: card.Term
+          Term: card.Term,
+          Definition: card.Definition
+          
         });
         console.log("Document written with ID: ", docRef.id);
       } catch (e) {
@@ -56,4 +57,4 @@ signInWithEmailAndPassword(auth, email, password)
   });
 }
 
-export {firebase, db, login, getFlashCards, getData, AddFlashCard};
+export {firebase, db, login, getFlashCards, getData};
