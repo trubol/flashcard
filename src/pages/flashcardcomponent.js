@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import {
   firebase,
   db,
@@ -18,6 +18,7 @@ export default class FlashCard extends React.Component {
       index: 0,
       isLoaded: false,
       term: true,
+      setAccessState: false,
       flashcards: [],
     };
   }
@@ -29,6 +30,26 @@ export default class FlashCard extends React.Component {
     // this.setState({isLoaded:true});
     this.randomInteger();
   }
+
+handleDefinition=() => {
+  this.setState({setAccessState:!this.state.setAccessState});
+}
+
+handleNext=() => {
+  this.setState({index: this.state.index +1})
+  if(this.state.index==this.state.flashcards.length-1) {
+    this.setState({index:0});
+  }
+
+}
+
+handlePrevious=() => {
+  this.setState({index: this.state.index -1})
+  if(this.state.index<=0) {
+    this.setState({index: this.state.flashcards.length-1});
+  }
+}
+
 
   randomInteger = () => {
     let RandomNumber = Math.floor(Math.random() * this.state.flashcards.length);
@@ -56,16 +77,17 @@ export default class FlashCard extends React.Component {
                     ? this.state.flashcards[this.state.index].Term
                     : ""}
                 </h1>
-                {/* <h2>{this.state.isLoaded? this.state.flashcards[1].Definition: ''}</h2> */}
+                <h2>Definition:{" "}
+                {this.state.setAccessState? this.state.flashcards[this.state.index].Definition: ''}</h2>
               </Col>
             </Row>
           </Container>
           <Container className="center">
             <Row>
               <Col>
-                <button className="btn btn-danger">Previous</button>
-                <button className="btn btn-primary">Show Definition</button>
-                <button className="btn btn-warning">Next</button>
+                <Button onClick={this.handlePrevious} className="btn btn-danger">Previous</Button>
+                <Button onClick={this.handleDefinition} className="btn btn-primary">Show Definition</Button>
+                <Button onClick={this.handleNext} className="btn btn-warning">Next</Button>
               </Col>
             </Row>
           </Container>
