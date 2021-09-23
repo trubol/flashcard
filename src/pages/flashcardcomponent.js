@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import {
   firebase,
   db,
   login,
   getFlashCards,
   getData,
+  getCSSData,
+  getHTMLData,
+  getJavaScriptData,
+  getReactData,
   AddFlashCard,
   flashcardCollection,
 } from "../services/firebase";
@@ -59,18 +63,62 @@ handlePrevious=() => {
     });
   };
 
+  handleChange= async (event) => {
+    let data;
+    switch (event.target.value) {
+      case "CSS":
+      data = await getCSSData();
+      break;
+  
+      case "HTML":
+      data = await getHTMLData();
+      break;
+  
+      case "JavaScript":
+      data= await getJavaScriptData();
+      break;
+  
+      case "React":
+      data= await getReactData();
+      break;
+  
+      default:
+        data= await getData();
+        break;
+    
+    }
+    this.setState({
+      index: 0,
+      flashcards:data
+    })
+    
+  }
+  
+
   render() {
     return (
       <>
           <Container className="center">
             <Row>
               <Col>
-                <h3>
+              <h3>Select a category:</h3>
+              <Form>
+              <Form.Select onChange={this.handleChange} aria-label="Flashcard Select Category" >
+              <option value="default">All Categories</option>
+              <option value="CSS">CSS</option>
+              <option value="HTML">HTML</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="React">React</option>
+              </Form.Select>
+              </Form>
+
+
+               { <h3>
                   Category:{" "}
                   {this.state.isLoaded
                     ? this.state.flashcards[this.state.index].Category
                     : ""}
-                </h3>
+                </h3>}
                 <h1>
                   Term:{" "}
                   {this.state.isLoaded
@@ -86,7 +134,7 @@ handlePrevious=() => {
             <Row>
               <Col>
                 <Button onClick={this.handlePrevious} className="btn btn-danger">Previous</Button>
-                <Button onClick={this.handleDefinition} className="btn btn-primary">Show Definition</Button>
+                <Button onClick={this.handleDefinition} className="btn btn-primary">Show/Hide Definition</Button>
                 <Button onClick={this.handleNext} className="btn btn-warning">Next</Button>
               </Col>
             </Row>
